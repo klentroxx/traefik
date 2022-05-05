@@ -3,9 +3,6 @@
     "please:$apr1$sIoM6/3M$OeA4TXsmF9mIh1BBdBTIf1"
   ]
 
-[http.middlewares.redirectToHttps.redirectScheme]
-    scheme = "https"
-
 [http.routers.api]
   rule = "Host(`example.net`)" # Módosítani sajátra
   entrypoints = ["websecure"]
@@ -14,7 +11,3 @@
   [http.routers.api.tls]
     certResolver = "letsEncrypt"
 
-[http.routers.catchAll]
-    rule = "hostregexp(`{host:.+}`)"
-    entrypoints = ["web"]
-    middlewares = ["redirectToHttps"]

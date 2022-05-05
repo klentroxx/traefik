@@ -13,6 +13,11 @@ services:
     networks:
       - default
       - proxy
+    labels:
+      - "traefik.http.routers.catchAll.rule=hostregexp(`{host:.+}`)"
+      - "traefik.http.routers.catchAll.entrypoints=web"
+      - "traefik.http.routers.catchAll.middlewares=redirectToHttps"
+      - "traefik.http.middlewares.redirectToHttps.redirectscheme.scheme=https"
 
 networks:
   proxy:
