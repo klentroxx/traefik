@@ -1,0 +1,27 @@
+[entryPoints]
+	[entryPoints.web]
+		address = ":80"
+		[entryPoints.web.http.redirections.entryPoint]
+			to = "websecure"
+			scheme = "https"
+	[entryPoints.websecure]
+		address = ":443"
+
+[api]
+  dashboard = true
+
+[log]
+  level = "ERROR"
+
+[certificatesResolvers.letsEncrypt.acme]
+  email = "your@email.com" # Módosítani sajátra
+  storage = "acme.json"
+  [certificatesResolvers.letsEncrypt.acme.httpChallenge]
+    entryPoint = "web"
+
+[providers.docker]
+  defaultRule = "Host(`{{ trimPrefix `/` .Name }}.domain.com`)" # Módosítani sajátra
+  network = "traefik_proxy"
+
+[providers.file]
+  filename = "traefik_dynamic.toml"

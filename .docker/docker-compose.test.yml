@@ -1,0 +1,20 @@
+version: "3.5"
+
+services:
+  traefik:
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "./proxy/traefik/default.test.toml:/traefik.toml"
+      - "./proxy/traefik/default_dynamic.test.toml:/traefik_dynamic.toml"
+      - "./proxy/traefik/acme.json:/etc/traefik/acme/acme.json"
+    networks:
+      - default
+      - proxy
+
+networks:
+  proxy:
+    external:
+      name: traefik_proxy
